@@ -1,0 +1,13 @@
+#Settings for the Union2.1 data analysis
+
+name = union2.1
+data_size = 580
+
+#	z, mu, dmu, P
+data_file = data/Union2.1/sn_z_mu_dmu_plow_union2.1.txt
+
+#	covariance without systematics
+cov_nosys = data/Union2.1/sn_wmat_nosys_union2.1.txt
+
+#	covariance with systematics
+cov_sys = data/Union2.1/sn_wmat_sys_union2.1.txt

@@ -1,0 +1,2 @@
+# generated from wmap9 distance prior
+    294.4692059     1.741422871     1092.720721
