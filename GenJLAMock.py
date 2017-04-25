@@ -7,6 +7,10 @@ from scipy.interpolate import interp1d
 covmat = loadtxt('data/JLA_cov.txt')
 jla = loadtxt('data/mock_jla_amin_1E-6_interpsize_1000.txt')
 
+print 'saving the inverse covariance matrix ...'
+icovmat = inv(covmat)
+savetxt('jla_covmat_inv.txt',icovmat,fmt='%15.8E')
+
 A = cholesky(covmat,lower=True)
 
 r = randn(jla.shape[0])
