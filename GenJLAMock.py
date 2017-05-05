@@ -23,7 +23,7 @@ mu = jla[:,3]  # use the unperturbed distance modulus
 err= diag(covmat)**0.5
 
 # Now write mock SN into file
-fp = open('jla_mock_amin_1E-6_interpsize_1000.txt','w')
+fp = open('jla_mock_amin_1E-6_interpsize_1000_A.txt','w')
 
 for i in range(len(z)):
     print >> fp, '%s %15.10f %15.10f %15.10f %15.10f'%('mock_JLA', z[i],mu[i]+dmu[i],err[i],mu[i])
