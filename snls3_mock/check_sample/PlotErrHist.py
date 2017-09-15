@@ -22,7 +22,7 @@ def read_snls3_mock( mock_filename ):
 
 	return np.array(snls3)
 
-def main():
+def gethist(outfig_name=None):
 	if len(sys.argv) < 2:
 		print 'usage: %s snls3_mock.txt'%(sys.argv[0])
 		sys.exit(0)
@@ -38,6 +38,14 @@ def main():
 	nbin_2 = 10
 	z1 = 0.4
 	z2 = 0.6
+
+	# sort redshifts
+	zsort = np.argsort(z)
+	n = len(z)/3
+	z1 = z[zsort[n-1]]
+	z2 = z[zsort[2*n-1]]
+
+	print 'z1 = %g, z2 = %g'%(z1,z2)
 	
 	plt.figure()
 	# plt.errorbar(snls3[:,0],snls3[:,1],yerr=snls3[:,2])
@@ -48,7 +56,15 @@ def main():
 	plt.hist(dmu[ID2], bins=nbin_2, histtype='step', label=r'$z >= 0.8$')
 
 	plt.legend(loc='upper left')
-	plt.show()
+	if outfig_name is None:
+		plt.show()
+	else:
+		plt.savefig(outfig_name)
+
+
 
 if __name__ == '__main__':
-	main()
+	if len(sys.argv) == 2:
+		gethist()
+	elif len(sys.argv) == 3:
+		gethist(sys.argv[2])

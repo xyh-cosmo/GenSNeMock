@@ -1,4 +1,4 @@
-import os
+import os,sys,time
 from pylab import *
 from scipy.linalg import cholesky
 from scipy.integrate import quad
@@ -39,6 +39,7 @@ for n in range(1,101):
 
     r = randn(snls3.shape[0])
     dmu = matmul(A,r)
+    time.sleep(0.5);
     
     for i in range(len(z)):
         mu = Dl_z_ref(z[i])
