@@ -7,13 +7,12 @@ from scipy.interpolate import interp1d
 z_dl_mu = np.loadtxt('classmc_z_Dl_mu_LCDM.txt')
 fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
 
-# load SNLS3 redshifts
-snls3 = np.loadtxt('data/mock_snls3_amin_1E-6_interpsize_1000.txt')
-z_snls3 = snls3[:,0]
+# load JLA redshifts
+z_jla = np.loadtxt('jla_z.txt')
 
 # load covariance matrix
-covmat = np.loadtxt('data/snls3_covmat.txt')
-var_snls3 = covmat.diagonal()**0.5
+covmat = np.loadtxt('data/JLA_cov.txt')
+var_jla = covmat.diagonal()**0.5
 
 
 # set the random number seed
@@ -40,14 +39,14 @@ num_of_mocks = 10
 
 cnt = 0
 while cnt < 10:
-	mu = fun_mu(z_snls3)
+	mu = fun_mu(z_jla)
 	mu_err = gen_err(covmat,use_full_cov=False)
 	ks_stats, pvalue = stats.kstest(mu_err/covmat.diagonal()**0.5,cdf='norm')
 	if pvalue > 0.5:
 		print 'yeap! got a good mock sample! pvalue = %g'%(pvalue)
-		fname = 'MOCK_SNLS3_'+str(cnt+1)+'.txt'
+		fname = 'MOCK_JLA_'+str(cnt+1)+'.txt'
 		fp = open(fname,'w')
 		for i in range(len(mu)):
-			print >> fp, '%10s %8.6f %10.8f %10.8f %10.8f'%('snls3_mock',z_snls3[i],mu[i]+mu_err[i],var_snls3[i],mu[i])
+			print >> fp, '%10s %8.6f %10.8f %10.8f %10.8f'%('jla_mock',z_jla[i],mu[i]+mu_err[i],var_jla[i],mu[i])
 		fp.close()
 		cnt += 1
