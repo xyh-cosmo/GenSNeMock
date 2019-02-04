@@ -15,10 +15,6 @@ covmat = np.loadtxt('data/JLA_cov.txt')
 var_jla = covmat.diagonal()**0.5
 
 
-# set the random number seed
-#np.random.seed(1234567890)
-
-
 def gen_err(covmat=None,use_full_cov=True):
 	if covmat is None:
 		print('covmat is not set, exit!')
@@ -34,6 +30,9 @@ def gen_err(covmat=None,use_full_cov=True):
 	
 	err = np.random.multivariate_normal(mean,covmat)
 	return err
+
+# set the random number seed
+#np.random.seed(1234567890)
 
 num_of_mocks = 100
 P_VALUE = 0.2

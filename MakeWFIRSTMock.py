@@ -5,8 +5,11 @@ import scipy.stats as stats
 from scipy.interpolate import interp1d
 
 # load LCDM fiducial distance mudulus
-z_dl_mu = np.loadtxt('classmc_z_Dl_mu_LCDM.txt')
-fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
+# z_dl_mu = np.loadtxt('classmc_z_Dl_mu_LCDM.txt')
+# fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
+
+z_dl_mu = np.loadtxt('classmc_test_20190203_mu.txt')
+fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,1])
 
 def mu_err(z,sigma_int=0.09,sigma_meas=0.08,sigma_lens=0.07,sigma_sys=0.02):
 	sigma_tot = sigma_int**2 + sigma_meas**2 + (sigma_lens*z)**2 + (sigma_sys*(1.+z)/1.8)**2
@@ -50,12 +53,13 @@ def get_mu_err(z):
 	return np.array(err)
 
 # set the random number seed
-np.random.seed(1234567890)
+# np.random.seed(1234567890)
 
-num_of_mocks = 10
+num_of_mocks = 2
+P_VALUE = 0.
 
 cnt = 0
-while cnt < 10:
+while cnt < num_of_mocks:
 	z = get_wfirst_z()
 	mu = fun_mu(z)
 	mu_std = get_mu_err(z)
@@ -64,19 +68,11 @@ while cnt < 10:
 		dmu[i] = np.random.normal()*mu_std[i]
 	
 	ks_stats, pvalue = stats.kstest(dmu/mu_std,cdf='norm')
-	if pvalue > 0.5:
-		print 'yeap! got a good mock sample! pvalue = %g'%(pvalue)
-		fname = 'WFIRST_SN_'+str(cnt+1)+'.txt'
+	if pvalue > P_VALUE:
+		print('yeap! got a good mock sample! pvalue = %g'%(pvalue))
+		fname = 'mock_WFIRST/WFIRST_SN_'+str(cnt+1)+'.txt'
 		fp = open(fname,'w')
 		for i in range(len(mu)):
-			print >> fp, '%8.6f %10.8f %10.8f %10.8f'%(z[i],mu[i]+dmu[i],mu_std[i],mu[i])
+			fp.write('%8.6f %10.8f %10.8f %10.8f\n'%(z[i],mu[i]+dmu[i],mu_std[i],mu[i]))
 		fp.close()
 		cnt += 1
-
-
-# sn_z = get_wfirst_z()
-
-# plt.hist(sn_z,bins=16)
-
-# plt.show()
-
