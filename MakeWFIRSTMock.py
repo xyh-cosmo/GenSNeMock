@@ -1,4 +1,4 @@
-import sys as sys
+import os, sys
 import numpy as np
 import matplotlib.pylab as plt
 import scipy.stats as stats
@@ -8,8 +8,26 @@ from scipy.interpolate import interp1d
 # z_dl_mu = np.loadtxt('classmc_z_Dl_mu_LCDM.txt')
 # fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
 
-z_dl_mu = np.loadtxt('classmc_test_20190203_mu.txt')
+# load prec-computed z-mu relation by CLASS
+z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190204_mu.txt')
 fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,1])
+
+# set output dir
+out_dir = 'mock_WFIRST_20190204'
+
+
+# set the random number seed
+# np.random.seed(1234567890)
+
+num_of_mocks = 2
+P_VALUE = 0.
+
+# check the existence of out_dir
+if os.path.isdir(out_dir):
+	print('directory %s already exist ...\n'%(out_dir))
+else:
+	print('creating directory: %s'%(out_dir))
+	os.mkdir(out_dir)
 
 def mu_err(z,sigma_int=0.09,sigma_meas=0.08,sigma_lens=0.07,sigma_sys=0.02):
 	sigma_tot = sigma_int**2 + sigma_meas**2 + (sigma_lens*z)**2 + (sigma_sys*(1.+z)/1.8)**2
@@ -52,11 +70,6 @@ def get_mu_err(z):
 
 	return np.array(err)
 
-# set the random number seed
-# np.random.seed(1234567890)
-
-num_of_mocks = 2
-P_VALUE = 0.
 
 cnt = 0
 while cnt < num_of_mocks:
@@ -70,7 +83,7 @@ while cnt < num_of_mocks:
 	ks_stats, pvalue = stats.kstest(dmu/mu_std,cdf='norm')
 	if pvalue > P_VALUE:
 		print('yeap! got a good mock sample! pvalue = %g'%(pvalue))
-		fname = 'mock_WFIRST/WFIRST_SN_'+str(cnt+1)+'.txt'
+		fname = out_dir+'/WFIRST_SN_'+str(cnt+1)+'.txt'
 		fp = open(fname,'w')
 		for i in range(len(mu)):
 			fp.write('%8.6f %10.8f %10.8f %10.8f\n'%(z[i],mu[i]+dmu[i],mu_std[i],mu[i]))
