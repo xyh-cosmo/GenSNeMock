@@ -63,6 +63,7 @@ cnt = 0
 # 		cnt += 1
 
 while cnt < num_of_mocks:
+	print('@ cnt --> %5d\n'%cnt)
 	mu = fun_mu(z_jla)
 	mu_err = gen_err(covmat,use_full_cov=True)
 	fname = out_dir+'/MOCK_JLA_'+str(cnt+1)+'.txt'
