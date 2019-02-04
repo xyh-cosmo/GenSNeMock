@@ -10,7 +10,7 @@ from scipy.interpolate import interp1d
 
 # load prec-computed z-mu relation by CLASS
 z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190204_mu.txt')
-fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,1])
+fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
 
 # set output dir
 out_dir = 'mock_WFIRST_20190204'
