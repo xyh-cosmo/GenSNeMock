@@ -19,7 +19,7 @@ out_dir = 'mock_WFIRST_20190204'
 # set the random number seed
 # np.random.seed(1234567890)
 
-num_of_mocks = 2
+num_of_mocks = 1000
 P_VALUE = 0.
 
 # check the existence of out_dir

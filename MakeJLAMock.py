@@ -65,7 +65,7 @@ cnt = 0
 while cnt < num_of_mocks:
 	print('@ cnt --> %5d\n'%cnt)
 	mu = fun_mu(z_jla)
-	mu_err = gen_err(covmat,use_full_cov=True)
+	mu_err = gen_err(covmat,use_full_cov=False)
 	fname = out_dir+'/MOCK_JLA_'+str(cnt+1)+'.txt'
 	fp = open(fname,'w')
 	for i in range(len(mu)):
