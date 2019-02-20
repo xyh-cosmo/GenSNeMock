@@ -4,11 +4,11 @@ import scipy.stats as stats
 from scipy.interpolate import interp1d
 
 # load LCDM fiducial distance mudulus
-z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190204_mu.txt')
-fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
+z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190220_mu.txt')
+fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2],kind='cubic')
 
 # set output dir
-out_dir = 'mock_JLA_20190204'
+out_dir = 'mock_JLA_20190220'
 
 # check existence of out_dir
 if os.path.isdir(out_dir):
@@ -62,9 +62,11 @@ cnt = 0
 # 		fp.close()
 # 		cnt += 1
 
+
+mu = fun_mu(z_jla)
 while cnt < num_of_mocks:
-	print('@ cnt --> %5d\n'%cnt)
-	mu = fun_mu(z_jla)
+#	print('@ cnt --> %5d\n'%cnt)
+#	mu = fun_mu(z_jla)
 	mu_err = gen_err(covmat,use_full_cov=False)
 	fname = out_dir+'/MOCK_JLA_'+str(cnt+1)+'.txt'
 	fp = open(fname,'w')
