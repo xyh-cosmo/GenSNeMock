@@ -9,11 +9,11 @@ from scipy.interpolate import interp1d
 # fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
 
 # load prec-computed z-mu relation by CLASS
-z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190204_mu.txt')
-fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2])
+z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190220_mu.txt')
+fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2],kind='cubic')
 
 # set output dir
-out_dir = 'mock_WFIRST_20190204'
+out_dir = 'mock_WFIRST_20190220'
 
 
 # set the random number seed
