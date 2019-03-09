@@ -64,8 +64,8 @@ cnt = 0
 
 
 mu = fun_mu(z_jla)
-cnt=101
-while cnt <= 1000:
+cnt=100
+while cnt <= 100:
 #	print('@ cnt --> %5d\n'%cnt)
 #	mu = fun_mu(z_jla)
 	mu_err = gen_err(covmat,use_full_cov=True)
