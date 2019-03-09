@@ -8,7 +8,7 @@ z_dl_mu = np.loadtxt('template_sn_z_mu/classmc_test_20190220_mu.txt')
 fun_mu = interp1d(z_dl_mu[:,0],z_dl_mu[:,2],kind='cubic')
 
 # set output dir
-out_dir = 'mock_JLA_20190220'
+out_dir = 'mock_JLA_20190227_full_cov'
 
 # check existence of out_dir
 if os.path.isdir(out_dir):
@@ -20,7 +20,7 @@ else:
 # set the random numer seed
 #np.random.seed(1234567890)
 
-num_of_mocks = 1000
+num_of_mocks = 100
 P_VALUE = 0
 
 # load JLA redshifts
@@ -64,10 +64,11 @@ cnt = 0
 
 
 mu = fun_mu(z_jla)
-while cnt < num_of_mocks:
+cnt=101
+while cnt <= 1000:
 #	print('@ cnt --> %5d\n'%cnt)
 #	mu = fun_mu(z_jla)
-	mu_err = gen_err(covmat,use_full_cov=False)
+	mu_err = gen_err(covmat,use_full_cov=True)
 	fname = out_dir+'/MOCK_JLA_'+str(cnt+1)+'.txt'
 	fp = open(fname,'w')
 	for i in range(len(mu)):
